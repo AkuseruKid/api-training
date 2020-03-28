@@ -4,10 +4,20 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VillagerRepository")
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={"GET", "POST"},
+ *     itemOperations={"GET"},
+ *     normalizationContext={
+ *          "groups"={"villagers_read"}
+ *     },
+ *     attributes={
+ *          "pagination_enabled" = false
+ *     }
+ * )
  */
 class Villager
 {
@@ -15,26 +25,31 @@ class Villager
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"villagers_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"villagers_read"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"villagers_read"})
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"villagers_read"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"villagers_read"})
      */
     private $image;
 
